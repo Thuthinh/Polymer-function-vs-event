@@ -34,6 +34,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     class MyView1 extends Polymer.Element {
       constructor() {
         super();
+        // bind function to curent component scope.
         this._onClick = this._onClick.bind(this);
       }
       static get is() { return 'my-view1'; }
