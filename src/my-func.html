@@ -10,14 +10,21 @@
         padding: 10px;
       }
     </style>
-    <button on-click="clickFunc">Function</button>
+    <input type="text" value="[[firstName]]" name="firstName" on-change="fieldChange"/>
+    <input type="text" value="[[lastName]]" name="lastName" on-change="fieldChange"/>
+    <button on-click="load">Load</button>
+    <button on-click="refresh">Default</button>
   </template>
   <script>
     class MyFunc extends Polymer.Element {
       static get is() { return 'my-func'; }
       static get properties(){
           return {
-              //clickFunc: Function
+            firstName: String,
+            lastName: String,
+            refresh: Function,
+            load: Function,
+            fieldChange: Function
           };
       }
     }

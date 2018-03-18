@@ -25,8 +25,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
     <div class="card">
       <div class="circle">1</div>
-      <my-func click-Func="[[_onClick]]"></my-func>
-      <my-event on-click-event="_onClick"></my-event>
+      <my-func first-name="[[firstName]]" last-name="[[lastName]]" refresh="[[_refresh]]" field-change="[[_onFieldChangeWithFunction]]" load="[[_load]]"></my-func>
+      <my-event first-name="[[firstName]]" last-name="[[lastName]]" on-refresh="_refresh" on-field-change="_onFieldChangeWithEvent" on-load="_load"></my-event>
     </div>
   </template>
 
@@ -35,12 +35,42 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       constructor() {
         super();
         // bind function to curent component scope.
-        this._onClick = this._onClick.bind(this);
+        this._refresh = this._refresh.bind(this);
+        this._onFieldChangeWithFunction = this._onFieldChangeWithFunction.bind(this);
+        this._onFieldChangeWithEvent = this._onFieldChangeWithEvent.bind(this);
+        this._load = this._load.bind(this);
       }
       static get is() { return 'my-view1'; }
+      static get properties(){
+        return{
+          firstName: {type: String, value: 'John' },
+          lastName: {type: String, value: 'Smith' }
+        }
+      }
 
-      _onClick(e){
-        alert('clicked');
+      _load(){
+        this.setProperties({
+          firstName: 'Love',
+          lastName: 'Potion'
+        });
+      }
+
+      _onFieldChangeWithFunction(e){
+        const {name, value} = e.target;
+        this.set(name, value);
+      }
+
+      _onFieldChangeWithEvent(e){
+        const {name, value} = e.detail;
+        this.set(name, value);
+      }
+
+      _refresh(e){
+        const {firstName, lastName} = this.constructor.properties;
+        this.setProperties({
+          firstName: firstName.value,
+          lastName: lastName.value
+        });
       }
     }
 
